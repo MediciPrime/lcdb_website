@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms.widgets import ListWidget, CheckboxInput
-from wtforms.fields import SelectMultipleField
+from wtforms.fields import SelectMultipleField, SubmitField
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -13,3 +13,4 @@ class SelectFiles(Form):
     Print out the checkbox values
     """
     example = MultiCheckboxField('BED Files')
+    submit = SubmitField('Submit')
