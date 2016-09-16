@@ -12,7 +12,7 @@ class PBed(db.Model):
         self.file_location = file_location
 
     def __repr__(self):
-        return '%r\r\n' % self.name
+        return '%r' % self.name
 
 
 class Jaccard(db.Model):

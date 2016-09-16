@@ -18,5 +18,4 @@ def populate_form(select_files):
 def index():
     select_files = SelectFiles()
     populate_form(select_files)
-    print(select_files.example.data)
     return render_template('index.html', form=select_files)
