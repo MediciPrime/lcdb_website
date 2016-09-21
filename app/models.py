@@ -3,7 +3,9 @@ from . import db
 
 class PBed(db.Model):
     __tablename__ = 'public_bed'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
     name = db.Column(db.String(64), unique=True)
     file_location = db.Column(db.String(64), unique=True)
 
@@ -12,7 +14,7 @@ class PBed(db.Model):
         self.file_location = file_location
 
     def __repr__(self):
-        return '%r' % self.name
+        return "'{0}', '{1}'".format(self.name, self.file_location)
 
 
 class Jaccard(db.Model):
@@ -28,4 +30,6 @@ class Jaccard(db.Model):
         self.file_location = file_location
 
     def __repr__(self):
-        return '<Jaccard %r>' % self.file_location
+        return "'{0}', '{1}', '{2}'".format(self.name,
+                                            self.file_location,
+                                            self.pbed)
