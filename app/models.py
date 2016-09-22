@@ -21,15 +21,11 @@ class Jaccard(db.Model):
     __tablename__ = 'jaccard'
     p_id = db.Column(db.Integer, db.ForeignKey(
         'public_bed.id'), primary_key=True)
-    name = db.Column(db.String(64), unique=True, index=True)
-    file_location = db.Column(db.String(64), unique=True)
+    u_inter = db.Column(db.Integer, unique=False)
     pbed = db.relationship('PBed', backref='pbed')
 
-    def __init__(self, name, file_location):
+    def __init__(self, name):
         self.name = name
-        self.file_location = file_location
 
     def __repr__(self):
-        return "'{0}', '{1}', '{2}'".format(self.name,
-                                            self.file_location,
-                                            self.pbed)
+        return "'{0}', '{1}'".format(self.name, self.pbed)
