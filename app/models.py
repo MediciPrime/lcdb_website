@@ -22,10 +22,10 @@ class Jaccard(db.Model):
     p_id = db.Column(db.Integer, db.ForeignKey(
         'public_bed.id'), primary_key=True)
     u_inter = db.Column(db.Integer, unique=False)
-    pbed = db.relationship('PBed', backref='pbed')
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, p_id, u_inter):
+        self.p_id = p_id
+        self.u_inter = u_inter
 
     def __repr__(self):
-        return "'{0}', '{1}'".format(self.name, self.pbed)
+        return "{0}, {1}".format(self.p_id, self.u_inter)

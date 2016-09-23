@@ -9,11 +9,11 @@ from .models import Heatmap
 def base():
     select_files = SelectFiles()
     select_files.files.choices = [(f.id, f.name)
-                                  for f in PBed.query.order_by('name')]
-    jaccard_output = Heatmap(select_files.files.data)
-    # print(jaccard_output.jaccard_output())
-    session['files_selected'] = select_files.files.data
+                                  for f in PBed.query.order_by('id')]
     if select_files.validate_on_submit():
+        session['files_selected'] = select_files.files.data
+        jaccard_output = Heatmap(select_files.files.data)
+        jaccard_output.jaccard_output()
         return redirect(url_for('.success'))
     return render_template('heatmap/index.html', form=select_files)
 
