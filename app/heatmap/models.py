@@ -1,34 +1,59 @@
-from itertools import combinations
+from itertools import permutations
 import subprocess
-from ..models import Jaccard, PBed
+from ..models import Bed, Colocalization
 from pybedtools import BedTool
 from .. import db
 
 
 class Heatmap:
 
-    def __init__(self, files):
+    def __init__(self, files, method):
         self.files = files
+        self.method = method
+
+    def determine_method(self):
+        if method[0] == 'Jaccard':
+            return jaccard_output(self)
+        elif method[0] == 'Fisher Exact':
+            return fisher_exact(self)
+        elif method[0] == 'GAT Log-Fold':
+            return gat_log_fold(self)
+        elif method[0] == 'GAT Percent Overlay':
+            return gat_percent_overlay(self)
+        elif method[0] == 'Interval Stats':
+            return interval_stats(self)
+        # include flash statement for user to select method
+        else:
+            pass
 
     def jaccard_output(self):
         # go through all the file combinations via id values
-        for combination in combinations(self.files, 2):
-            combined = magic(combination)
-            # if the combined id from combination is not in Jaccard
-            # database
-            if Jaccard.query.get(combined) == None:
-                # take combination and find individual files
-                file_location1 = PBed.query.get(
-                    combination[0]).file_location
-                file_location2 = PBed.query.get(
-                    combination[1]).file_location
+        for permutation in permutations(self.files, 2):
+            file_location1 = permutation[0]
+            file_location2 = permutation[1]
+            method = method[0]
+            # split list of permutations
+            if Colocalization.query.filter_by(file_location1=file_location1, file_location2=file_location2, method=method) == None:
                 # create the bed files using Bedtools Jaccard
-                u_intersect = BedTool(file_location1).jaccard(
+                u_inter = BedTool(file_location1).jaccard(
                     file_location2)['jaccard']
                 # sqlite table
-                value = Jaccard(p_id=combined, u_inter=u_intersect)
-                db.session.add(value)
+                data_value = Colocalization(file_location1=file_location1,
+                                            file_location2=file_location2, method=method, value=u_inter)
+                db.session.add(data_value)
                 db.session.commit()
+
+    def fisher_exact(self):
+        pass
+
+    def gat_log_fold(self):
+        pass
+
+    def gat_percent_overlay(self):
+        pass
+
+    def interval_stats(self):
+        pass
 
 
 def magic(numList):
