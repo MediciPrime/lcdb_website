@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms.widgets import ListWidget, CheckboxInput
-from wtforms.fields import SelectMultipleField, SubmitField
+from wtforms.fields import SelectMultipleField, SubmitField, RadioField
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -12,10 +12,8 @@ class SelectFiles(Form):
     """
     Print out the checkbox values
     """
-    files = MultiCheckboxField(u'Bed Files', coerce=int)
-    staticmethods = [
-        'Jaccard\r\nFisher-Exact\r\nGAT_Log-Fold\r\nGAT_Percent_Overlay\r\nInterval_Stats']
-    list_stat = staticmethods[0].split()
+    files = MultiCheckboxField(u'Bed Files', coerce=str)
+    list_stat = ['Jaccard', 'Fisher Exact', 'GAT Log Fold', 'GAT Percent Overlay', 'Interval Stats']
     smethods = [(x, x) for x in list_stat]
-    methods = MultiCheckboxField(u'Statistics', choices=smethods)
+    methods = RadioField(u'Statistics', choices=smethods)
     submit = SubmitField('Submit')

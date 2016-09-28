@@ -36,4 +36,4 @@ class Colocalization(db.Model):
         self.value = value
 
     def __repr__(self):
-        return "{0}, {1}".format(self.file_location1, self.file_location2, self.method, self.value)
+        return "{0}, {1}, {2}, {3}".format(self.file_location1, self.file_location2, self.method, self.value)

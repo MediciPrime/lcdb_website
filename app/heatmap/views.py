@@ -13,9 +13,9 @@ def base():
     if select_files.validate_on_submit():
         session['files_selected'] = select_files.files.data
         session['stat_method'] = select_files.methods.data
-        colocalization_output = Heatmap.determine_method(
+        colocalization_output = Heatmap(
             select_files.files.data, select_files.methods.data)
-        # colocalization_output.jaccard_output()
+        colocalization_output.determine_method()
         return redirect(url_for('.success'))
     return render_template('heatmap/index.html', form=select_files)
 

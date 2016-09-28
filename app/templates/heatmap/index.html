@@ -5,12 +5,27 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h2>Select atleast 2 Files</h2>
+    <h2>Select Two Files & A Method</h2>
 </div>
 
-<form method="POST">
-  {{ form.csrf_token }}
+
+<form class="form form-horizontal"  method="POST" role="form">
+  {{ form.hidden_tag() }}
+  {{ wtf.form_errors(form, hiddens="only") }}
+
+  <div>
+    {{ form.files.label }}
+    {{ form.files(style="list-style: none;") }}
+  </div>
+
+  <div>
+    {{ form.methods.label }}
+    {{ form.methods(style="list-style: none;") }}
+  </div>
+
+  {{ wtf.form_field(form.submit) }}
+  
 </form>
 
-{{ wtf.quick_form(form) }}
+  
 {% endblock %}
