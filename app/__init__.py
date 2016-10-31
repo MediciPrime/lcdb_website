@@ -21,8 +21,11 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
 
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
+
+    from .heatmap import heatmap as heatmap_blueprint
+    app.register_blueprint(heatmap_blueprint)
 
     """
     with app.app_context():
