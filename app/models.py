@@ -1,5 +1,8 @@
 from . import db
 
+"""
+Contains the sqlite tables and their attribute.
+"""
 
 class Bed(db.Model):
     __tablename__ = 'bed'
@@ -15,6 +18,17 @@ class Bed(db.Model):
         self.date = date
         self.user = user
         self.md5 = md5
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'file_location' : self.file_location,
+            'label'         : self.label,
+            'date'          : self.date,
+            'user'          : self.user,
+            'md5'           : self.md5
+        }
 
     def __repr__(self):
         return "'{0}', '{1}'".format(self.file_location, self.label)
@@ -35,5 +49,15 @@ class Colocalization(db.Model):
         self.method = method
         self.value = value
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'file_location1' : self.file_location1,
+            'file_location2' : self.file_location2,
+            'method'         : self.method,
+            'value'          : self.value
+            }
+    
     def __repr__(self):
         return "{0}, {1}, {2}, {3}".format(self.file_location1, self.file_location2, self.method, self.value)

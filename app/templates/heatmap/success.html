@@ -3,15 +3,47 @@
 
 {% block title %}LCDB | Heat Map{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='d3ia.css')  }}">
+{% endblock %}
+
+{% block body_attribs %}
+onload='createCooccurance({{ heatmapData }})'
+{% endblock body_attribs %}
+
 {% block page_content %}
+
 <div class="page-header">
-  <h1>Success?</h1>
+  <h1>Heatmap</h1>
   <p>
     Did you select:
     {% for item in session.pop('files_selected', []) %}
     {{ item }}
     {% endfor %}
   </p>
+
 </div>
 
+<aside style="margin-top:80px;">
+  <p>Order:
+    <select id="order">
+      <option value="name">by Name</option>
+      <option value="count">by Frequency</option>
+      <option value="group">by Cluster</option>
+    </select>
+  </p>
+</aside> 
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+  {% include "heatmap/heatmap.js" %}
+  {% include "heatmap/colorbrewer.js" %}
+</script>
+<script charset="utf-8">
+  {% include "heatmap/d3.v3.min.js" %}
+</script>
 {% endblock %}

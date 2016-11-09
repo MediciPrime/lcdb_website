@@ -9,11 +9,13 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class SelectFiles(Form):
-    """
-    Print out the checkbox values
-    """
-    files = MultiCheckboxField(u'Bed Files', coerce=str)
+
+    files = MultiCheckboxField(u'Bed Files', coerce=str)  # print out checkbox values
+
+    # print out radio values
     list_stat = ['Jaccard', 'Fisher Exact', 'GAT Log Fold', 'GAT Percent Overlay', 'Interval Stats']
     smethods = [(x, x) for x in list_stat]
     methods = RadioField(u'Statistics', choices=smethods)
+
+    # print submit field
     submit = SubmitField('Submit')
