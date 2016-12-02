@@ -117,7 +117,7 @@ function cooccurance(miserables) {
     column.append("line")
         .attr("x1", -width);
 
-    // add the rectangle names along the horizonal
+    // add the rectangle names along the horizontal
     column.append("text")
         .attr("x", 6)
         .attr("y", x.rangeBand() / 5)
