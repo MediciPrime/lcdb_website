@@ -38,13 +38,16 @@ class Heatmap(object):
             f_l1 = value[0]
             f_l2 = value[1]
             m = self.method
-            # determine if sqlite has jaccard value for query
+            # determine if sqlite has jaccard value for query, if not then add
             if Colocalization.query.filter_by(file_location1=f_l1, file_location2=f_l2, method=m).first() is None:
                 # create the bed files using Bedtools Jaccard
                 u_inter = BedTool(f_l1).jaccard(f_l2)['jaccard']
+                # determine md5 value for each file
+                md5_1 = Bed.query.filter_by(file_location=f_l1).first().md5
+                md5_2 = Bed.query.filter_by(file_location=f_l2).first().md5
                 # create sqlite table value then add and submit
                 data_value = Colocalization(file_location1=f_l1,
-                                            file_location2=f_l2, method=m, value=u_inter)
+                                            file_location2=f_l2, method=m, value=u_inter, md5_1=md5_1, md5_2=md5_2)
                 db.session.add(data_value)
                 db.session.commit()
 

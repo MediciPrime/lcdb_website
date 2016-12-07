@@ -3,53 +3,65 @@ import hashlib
 import os
 import re
 import sqlite3
+import yaml
 
-# define md5 hashing function
-def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, 'rb') as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+class Update:
 
+    def __init__(self, user, dirloc, organism, technique, afactor, tissue=None, cline=None):
+        self.user = user
+        self.organism = organism
+        self.technique = technique
+        self.afactor = afactor
+        self.tissue = tissue
+        self.cline = cline
+        self.dirloc = dirloc
 
-# connect to sqlite database
-conn = sqlite3.connect('data-dev.sqlite')
+    # define md5 hashing function
+    def md5(self):
+        hash_md5 = hashlib.md5()
+        with open(self.file_location, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                hash_md5.update(chunk)
+        return hash_md5.hexdigest()
 
-# create 'cursor' object to add values into sqlite3 database
-c = conn.cursor()
+    # generate list of files, add to tables Bed and Identity
+    def flist(self):
 
-# specify directory containing files
-parser = argparse.ArgumentParser()
-parser.add_argument('-d', '--directory', help='directory containing the bed files')
-parser.add_argument('-u', '--user', help='assumed user of the files', default='public')
+        # generate list of files
+        file_list = os.listdir(self.dirloc)
 
-# set d to directory location
-args = parser.parse_args()
-d = args.directory
-u = args.user
+        # connect to sqlite database
+        conn = sqlite3.connect('data-dev.sqlite')
 
-# set file_list to the list of files from 'd'
-file_list = os.listdir(d)
+        # create 'cursor' object to add values into sqlite3 database
+        c = conn.cursor()
 
-# iterate through the list of files and pertinent information to Bed
-for f in file_list:
+        # iterate through the list of files and pertinent information to Bed
+        for f in file_list:
 
-    # if file name contains '.bed. at the end, analyze it
-    if re.search('(\.bed$)', f):
-    
-        # identify all rows for table Bed
-        file_location = os.path.abspath(f)
-        label = re.sub('(\.bed$)', '', f)
-        date = os.path.getmtime(f)
-        user = u
-        md5val = md5(f)
+            # if file name contains '.bed. at the end, analyze it
+            if re.search('(\.bed$)', f):
+        
+                # identify all rows for table Bed
+                file_location = os.path.abspath(self.dirloc + f)
+                label = re.sub('(\.bed$)', '', f)
+                date = os.path.getmtime(file_location)
+                self.file_location = file_location
+                md5val = self.md5()
 
-        #TODO: handle situation where file is already present, i.e. md5 is not unique
-        try:
-            # insert values into Bed table
-            c.execute('insert into Bed values (?, ?, ?, ?, ?)',
-                      (file_location, label, date, user, md5val))
-            conn.commit()
-        except sqlite3.IntegrityError:
-            pass
+                #TODO: handle situation where file is already present, i.e. md5 is not unique
+                try:
+                    # insert values into Bed table
+                    c.execute('insert into Bed values (?, ?, ?, ?, ?)',
+                              (self.file_location, label, date, self.user, md5val))
+                    c.execute('insert into Identity values (?, ?, ?, ?, ?, ?)',
+                              (self.organism, self.technique, self.afactor, self.tissue, self.cline, md5val))
+                    conn.commit()
+                except sqlite3.IntegrityError:
+                    pass
+                
+# create object
+x = yaml.load(open('update.yaml'))
+for block in x:
+    print(block)
+    u = Update(**block).flist()
