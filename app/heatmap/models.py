@@ -34,39 +34,39 @@ class Heatmap(object):
         source = 0
         target = 0
         # split list of permutations
-        for value in product(self.files, repeat=2):
-            f_l1 = value[0]
-            f_l2 = value[1]
+        for jvalue in product(self.files, repeat=2):
+            f_l1 = jvalue[0]
+            f_l2 = jvalue[1]
+            md5_1 = Bed.query.filter_by(file_location=f_l1).first().md5
+            md5_2 = Bed.query.filter_by(file_location=f_l2).first().md5
             m = self.method
+            # fill colocalization table with jaccard values
             # determine if sqlite has jaccard value for query, if not then add
-            if Colocalization.query.filter_by(file_location1=f_l1, file_location2=f_l2, method=m).first() is None:
+            if Colocalization.query.filter_by(md5_1=md5_1, md5_2=md5_2, method=m).first() is None:
                 # create the bed files using Bedtools Jaccard
                 u_inter = BedTool(f_l1).jaccard(f_l2)['jaccard']
-                # determine md5 value for each file
-                md5_1 = Bed.query.filter_by(file_location=f_l1).first().md5
-                md5_2 = Bed.query.filter_by(file_location=f_l2).first().md5
+                # use md5 values for each file
                 # create sqlite table value then add and submit
-                data_value = Colocalization(file_location1=f_l1,
-                                            file_location2=f_l2, method=m, value=u_inter, md5_1=md5_1, md5_2=md5_2)
+                data_value = Colocalization(method=m, value=u_inter, md5_1=md5_1, md5_2=md5_2)
                 db.session.add(data_value)
                 db.session.commit()
 
-            # create the json object in correct order 
+            # create the json object in correct order, linked to heatmap.js
+            # 0,0 0,1 1,1; 0,0 0,1 0,2 1,0 1,1 1,2 2,0 2,1 2,2; and so on...
             if source == 0 and target == 0:
                 f_lab = Bed.query.filter_by(file_location=f_l1).first().label
                 nodeList.append({'name': f_lab, 'yoclust': 1})
                 jcard = Colocalization.query.filter_by(
-                    file_location1=f_l1, file_location2=f_l2, method='Jaccard').first().value
+                    md5_1=md5_1, md5_2=md5_2, method='Jaccard').first().value
                 linkList.append({'source': source, 'target': target, 'jaccard': jcard})
                 target += 1
             elif f_lab == Bed.query.filter_by(file_location=f_l1).first().label and source == 0:
-                jcard = Colocalization.query.filter_by(
-                    file_location1=f_l1, file_location2=f_l2, method='Jaccard').first().value
+                jcard = Colocalization.query.filter_by(md5_1=md5_1, md5_2=md5_2, method='Jaccard').first().value
                 linkList.append({'source': source, 'target': target, 'jaccard': jcard})
                 target += 1
             elif f_lab == Bed.query.filter_by(file_location=f_l1).first().label:
                 jcard = Colocalization.query.filter_by(
-                    file_location1=f_l1, file_location2=f_l2, method='Jaccard').first().value
+                    md5_1=md5_1, md5_2=md5_2, method='Jaccard').first().value
                 target += 1
                 linkList.append({'source': source, 'target': target, 'jaccard': jcard})
             else:
@@ -75,7 +75,7 @@ class Heatmap(object):
                 f_lab = Bed.query.filter_by(file_location=f_l1).first().label
                 nodeList.append({'name': f_lab, 'yoclust': 1})
                 jcard = Colocalization.query.filter_by(
-                    file_location1=f_l1, file_location2=f_l2, method='Jaccard').first().value
+                    md5_1=md5_1, md5_2=md5_2, method='Jaccard').first().value
                 linkList.append({'source': source, 'target': target, 'jaccard': jcard})
 
         return nodeList, linkList

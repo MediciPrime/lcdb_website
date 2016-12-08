@@ -44,22 +44,16 @@ class Identity(db.Model):
 
 class Colocalization(db.Model):
     __tablename__ = 'colocalization'
-    file_location1 = db.Column(db.String(64), db.ForeignKey(
-        'bed.file_location'))
-    file_location2 = db.Column(db.String(64), db.ForeignKey(
-        'bed.file_location'))
     method = db.Column(db.String(64), unique=False, primary_key=True)
     value = db.Column(db.Integer(), unique=False)
     md5_1 = db.Column(db.String(32), db.ForeignKey('bed.md5'), primary_key=True)
     md5_2 = db.Column(db.String(32), db.ForeignKey('bed.md5'), primary_key=True)
 
-    def __init__(self, file_location1, file_location2, method, value):
-        self.file_location1 = file_location1
-        self.file_location2 = file_location2
+    def __init__(self, method, value, md5_1, md5_2):
         self.method = method
         self.value = value
         self.md5_1 = md5_1
         self.md5_2 = md5_2
     
     def __repr__(self):
-        return "{0}, {1}, {2}, {3}".format(self.file_location1, self.file_location2, self.method, self.value)
+        return "{0}, {1}, {2}, {3}".format(self.md5_1, self.md5_2, self.method, self.value)
