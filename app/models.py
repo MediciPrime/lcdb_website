@@ -8,7 +8,7 @@ class Bed(db.Model):
     __tablename__ = 'bed'
     file_location = db.Column(db.Text(64), unique=True)
     label = db.Column(db.String(64), unique=True)
-    date = db.Column(db.Integer(), unique=True)
+    date = db.Column(db.Integer(), unique=False)
     user = db.Column(db.String(32), unique=False)
     md5 = db.Column(db.String(32), primary_key=True)
 
@@ -29,14 +29,18 @@ class Identity(db.Model):
     afactor = db.Column(db.String(32), unique=False)
     tissue = db.Column(db.String(32), unique=False)
     cline = db.Column(db.String(32), unique=False)
+    wld = db.Column(db.String(32), unique=False)
+    dld = db.Column(db.String(32), unique=False)
     md5 = db.Column(db.String(32), db.ForeignKey('bed.md5'), primary_key=True)
 
-    def __init__(self, organism, technique, afactor, tissue, cline, md5):
+    def __init__(self, organism, technique, afactor, tissue, cline, wld, dld, md5):
         self.organism = organism,
         self.technique = technique,
         self.afactor = afactor,
         self.tissue = tissue,
         self.cline = cline,
+        self.wld = wld,
+        self.dld = dld,
         self.md5 = md5
 
     def __repr__(self):

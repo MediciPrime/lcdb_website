@@ -4,14 +4,10 @@
   user: public
   organism: D. melanogaster
   technique: ChIP-seq
-  afactor: H3K4me3
-  cline: Kc167
   dirloc: /home/behram/Desktop/data/chip-seq/h3k4me3/
 
 -
-  user: public
+  user: ezequiel
   organism: D. melanogaster
   technique: ChIP-seq
-  afactor: ORC2
-  cline: Kc167
-  dirloc: /home/behram/Desktop/data/chip-seq/orc2/
+  dirloc: /home/behram/Desktop/beds/
