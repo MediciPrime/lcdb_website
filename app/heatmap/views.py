@@ -8,9 +8,15 @@ from .models import Heatmap
 
 @heatmap.route('/heatmap', methods=['GET', 'POST'])
 def base():
+
+    # create 'select_files' object from 'SelectFiles' class
     select_files = SelectFiles()
+
+    # order the selection process to display only desired files
     select_files.files.choices = [(f.file_location, f.label)
                                   for f in Bed.query.order_by('label')]
+
+    # process that occurs after file is selected and form is submitted
     if select_files.validate_on_submit():
         session['files_selected'] = select_files.files.data
         session['stat_method'] = select_files.methods.data

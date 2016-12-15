@@ -14,7 +14,7 @@ function cooccurance(miserables) {
     console.log(miserables)
     
     // locate the margin position?
-    var margin = {top: 100, right: 0, bottom: 10, left: 100},
+    var margin = {top: 250, right: 0, bottom: 10, left: 250},
         width = 800,
         height = 800;
 
