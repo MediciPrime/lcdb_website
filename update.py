@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import hashlib
 import os
@@ -78,9 +80,9 @@ class Update:
                 #TODO: handle situation where file is already present, i.e. md5 is not unique
                 try:
                     # insert values into Bed table
-                    c.execute('insert into Bed values (?, ?, ?, ?, ?)',
+                    c.execute('insert into Beds values (?, ?, ?, ?, ?)',
                               (self.file_location, label, date, self.user, md5val))
-                    c.execute('insert into Identity values (?, ?, ?, ?, ?, ?, ?, ?)',
+                    c.execute('insert into Identities values (?, ?, ?, ?, ?, ?, ?, ?)',
                               (self.organism, self.technique, self.afactor, self.tissue, self.cline,
                                self.wld, self.dld, md5val))
                     # print('{}, {}, {}, {}, {}, {}, {}'.format(self.organism, self.technique, self.afactor,
@@ -198,9 +200,10 @@ class Update:
                 file_ok = False
                 unknown.write(label + "\n")
                 print(file_ok)
-                
-# create object
-x = yaml.load(open('update.yaml'))
-for block in x:
-    print(block)
-    u = Update(**block).flist()
+
+if __name__ == '__main__':
+    # create object
+    x = yaml.load(open('update.yaml'))
+    for block in x:
+        print(block)
+        u = Update(**block).flist()
