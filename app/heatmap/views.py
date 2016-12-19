@@ -6,7 +6,7 @@ from ..models import Bed
 from .models import Heatmap
 
 
-@heatmap.route('/heatmap', methods=['GET', 'POST'])
+@heatmap.route('/', methods=['GET', 'POST'])
 def base():
 
     # create 'select_files' object from 'SelectFiles' class
@@ -28,8 +28,7 @@ def base():
         # determine_method selected by user and generate answer
         output = colocalization_output.determine_method()
 
-        # jsonify data and set to heatmapJson
-        #heatmapJson = jsonify({'nodes': output[0], 'links': output[1]})
+        # dump data and set to heatmapJson
         heatmapJson = dumps({'nodes' : output[0], 'links': output[1]})
         
         # with session cookie set redirect to success
@@ -37,6 +36,6 @@ def base():
     return render_template('heatmap/index.html', form=select_files)
 
 
-@heatmap.route('/heatmap/success', methods=['GET', 'POST'])
+@heatmap.route('/success', methods=['GET', 'POST'])
 def success():
     return render_template('heatmap/success.html')
