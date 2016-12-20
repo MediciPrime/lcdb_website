@@ -5,6 +5,21 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>HOME</h1>
+  <h1>Hello, {% if current_user.is_authenticated %}
+    {{ current_user.username }}{% else %}Fellow Scientist{% endif %}!
+    <h1>
 </div>
+<div class="page-body">
+  <h3>
+    {% if current_user.is_authenticated %}
+    Thank you for logging in!
+  </h3>
+  <h4>
+    You should now be able to visualize your data.
+  </h4>
+  <h3>
+    {% else %}
+    In order to visualize your data, please log in.
+    {% endif %}
+  </h3>
 {% endblock %}
