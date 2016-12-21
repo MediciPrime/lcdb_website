@@ -10,7 +10,11 @@ class MultiCheckboxField(SelectMultipleField):
 
 class SelectFiles(Form):
 
-    files = SelectMultipleField(u'Bed Files', coerce=str)  # print out checkbox values
+    # display public files
+    pfiles = SelectMultipleField(u'Public Bed Files', coerce=str)  # print out checkbox values
+    
+    # display user specific files
+    ufiles = SelectMultipleField(u'User Bed Files', coerce=str)
 
     # print out radio values
     list_stat = ['Jaccard', 'Fisher Exact', 'GAT Log Fold', 'GAT Percent Overlay', 'Interval Stats']
