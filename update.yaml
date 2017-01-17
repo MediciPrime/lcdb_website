@@ -7,7 +7,7 @@
   dirloc: /home/behram/Desktop/data/chip-seq/h3k4me3/
 
 -
-  user: ezequiel
+  user: Behram
   organism: D. melanogaster
   technique: ChIP-seq
   dirloc: /home/behram/Desktop/beds/

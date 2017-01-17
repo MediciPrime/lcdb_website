@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, request, session
 from flask.json import dumps
+from flask.ext.login import current_user
 from . import heatmap
 from .forms import SelectFiles
 from ..models import Bed
@@ -13,17 +14,23 @@ def base():
     select_files = SelectFiles()
 
     # order the selection process to display only desired files
-    select_files.files.choices = [(f.file_location, f.label)
-                                  for f in Bed.query.order_by('label')]
+    select_files.pfiles.choices = [(f.file_location, f.label)
+                                   for f in Bed.query.filter_by(user='public')]
+
+    # display user data if logged in and confirmed
+    if current_user.is_authenticated \
+       and current_user.confirmed:
+        select_files.ufiles.choices = [(f.file_location, f.label)
+                                      for f in Bed.query.filter_by(user=getattr(current_user, "username"))]
 
     # process that occurs after file is selected and form is submitted
     if select_files.validate_on_submit():
-        session['files_selected'] = select_files.files.data
+        session['files_selected'] = select_files.pfiles.data + select_files.ufiles.data
         session['stat_method'] = select_files.methods.data
 
         # create 'colocalization_output' object
         colocalization_output = Heatmap(
-            select_files.files.data, select_files.methods.data)
+            session['files_selected'], select_files.methods.data)
 
         # determine_method selected by user and generate answer
         output = colocalization_output.determine_method()
