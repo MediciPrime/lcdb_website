@@ -22,6 +22,8 @@ def base():
        and current_user.confirmed:
         select_files.ufiles.choices = [(f.file_location, f.label)
                                       for f in Bed.query.filter_by(user=getattr(current_user, "username"))]
+    else:
+        select_files.ufiles.choices = []
 
     # process that occurs after file is selected and form is submitted
     if select_files.validate_on_submit():
