@@ -1,0 +1,6 @@
+app/__pycache__*
+__pycache__/*
+app/*/__pycache__/*
+data-dev.sqlite
+migrations/*
+unknown.txt
