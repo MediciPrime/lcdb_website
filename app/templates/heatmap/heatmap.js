@@ -56,16 +56,16 @@ function cooccurance(miserables) {
         // all containing x, y and z.
         matrix[i] = d3.range(n).map(function(j) { return {x: j, y: i, z: 0};});
     });
-
+    
     // once the matrix is created a z-value is set
     // Convert links to matrix; count character occurrences.
     miserables.links.forEach(function(link) {
-        matrix[link.source][link.target].z += link.jaccard;
-        matrix[link.target][link.source].z += link.jaccard;
-        matrix[link.source][link.source].z += link.jaccard;
-        matrix[link.target][link.target].z += link.jaccard;
-        nodes[link.source].count += link.jaccard;
-        nodes[link.target].count += link.jaccard;
+        matrix[link.source][link.target].z += link.value;
+        matrix[link.target][link.source].z += link.value;
+        matrix[link.source][link.source].z += link.value;
+        matrix[link.target][link.target].z += link.value;
+        nodes[link.source].count += link.value;
+        nodes[link.target].count += link.value;
     });
 
     //alert("matrix = "+  ) 
