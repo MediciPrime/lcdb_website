@@ -14,3 +14,7 @@ line {
 text.active {
     fill: red;
 }
+
+cell.active {
+    fill: black;
+}

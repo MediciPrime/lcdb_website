@@ -5,13 +5,10 @@
 // }
 
 function createCooccurance(data) {
-    console.log(data);
     cooccurance(data);
 }
     
 function cooccurance(miserables) {
-
-    console.log(miserables)
     
     // locate the margin position?
     var margin = {top: 250, right: 0, bottom: 10, left: 250},
@@ -67,16 +64,14 @@ function cooccurance(miserables) {
         nodes[link.source].count += link.value;
         nodes[link.target].count += link.value;
     });
-
-    //alert("matrix = "+  ) 
     
     // Precompute the orders.
     var orders = {
-        name: d3.range(n).sort(function(a, b) { return d3.ascending(nodes[a].name, nodes[b].name); }),
-        count: d3.range(n).sort(function(a, b) { return nodes[b].count - nodes[a].count; }),
-        group: d3.range(n).sort(function(a, b) { return nodes[b].yoclust - nodes[a].yoclust; })
+        name: d3.range(n).sort(function(a, b) { return d3.ascending(nodes[a].name, nodes[b].name); }), // name
+        count: d3.range(n).sort(function(a, b) { return nodes[b].count - nodes[a].count; }), // frequency
+        group: d3.range(n).sort(function(a, b) { return nodes[b].yoclust - nodes[a].yoclust; }) // cluster
     };
-
+    
     // The default sort order, by names A - Z
     x.domain(orders.name);
 
@@ -134,10 +129,11 @@ function cooccurance(miserables) {
             .attr("x", function(d) { return x(d.x); })
             .attr("width", x.rangeBand())
             .attr("height", x.rangeBand())
-            .style("fill-opacity", function(d) { return z(d.z); })
+            .style("fill-opacity", function(d) { return z(d.z); })  // modify opacity based on value
             .style("fill", function(d) { return nodes[d.x].yoclust == nodes[d.y].yoclust ? c(nodes[d.x].yoclust) : null; })
             .on("mouseover", mouseover)
-            .on("mouseout", mouseout);
+            .on("mouseout", mouseout)
+            .on("click", click);
     }
 
     // turns labels red when mouse goes over rectangle
@@ -149,6 +145,11 @@ function cooccurance(miserables) {
     // turns labels black when mouse is no longer over rectangle
     function mouseout() {
         d3.selectAll("text").classed("active", false);
+    }
+
+    // presents text for 'value'
+    function click(p) {
+        d3.select("rect.cell").attr("fill-opacity", function() {console.log(z(p.z))});
     }
 
     // implements reordering of rectangles
