@@ -81,6 +81,24 @@ class Bed(db.Model):
     def __repr__(self):
         return "'{0}', '{1}', '{2}'".format(self.file_location, self.label, self.md5)
 
+class RNAseq(db.Model):
+    __tablename__ = 'rnaseq'
+    file_location = db.Column(db.Text(64), unique=True)
+    label = db.Column(db.String(64), unique=True)
+    date = db.Column(db.Integer(), unique=False)
+    user = db.Column(db.String(32), unique=False)
+    md5 = db.Column(db.String(32), primary_key=True)
+
+    def __init__(self, file_location, label, date, user, md5):
+        self.file_location = file_location
+        self.label = label
+        self.date = date
+        self.user = user
+        self.md5 = md5
+
+    def __repr__(self):
+        return "'{0}', '{1}', '{2}'".format(self.file_location, self.label, self.md5)
+    
 class Identity(db.Model):
     __tablename__ = 'identities'
     organism = db.Column(db.String(32), unique=False)

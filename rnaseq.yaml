@@ -1,0 +1,7 @@
+# !!python/object:__main__.Update
+
+-
+  user: public
+  organism: D. melanogaster
+  technique: RNA-seq
+  dirloc: /home/behram/Desktop/test/ma-plot/

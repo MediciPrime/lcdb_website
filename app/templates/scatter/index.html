@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}LCDB | MA Plot{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h2>Select RNA-Seq Experiment</h2>
+</div>
+
+<form class="form form-horizontal"  method="POST" role="form">
+  {{ form.hidden_tag() }}
+  {{ wtf.form_errors(form, hiddens="only") }}
+
+  <div>
+    {{ form.pfiles.label }}
+    {{ form.pfiles(style="list-style: none;") }}
+  </div>
+
+  <div>
+    {{ form.ufiles.label }}
+    {{ form.ufiles(style="list-style: none;") }}
+  </div>
+
+  <div>
+    {{ form.adjpval.label }}
+    {{ form.adjpval(style="list-style: none;") }}
+  </div>
+
+  {{ wtf.form_field(form.submit) }}
+  
+</form>
+
+
+{% endblock %}

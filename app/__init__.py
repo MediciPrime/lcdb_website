@@ -33,6 +33,9 @@ def create_app(config_name):
     from .heatmap import heatmap as heatmap_blueprint
     app.register_blueprint(heatmap_blueprint, url_prefix='/heatmap')
 
+    from .scatter import scatter as scatter_blueprint
+    app.register_blueprint(scatter_blueprint, url_prefix='/maplot')
+
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     
