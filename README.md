@@ -13,4 +13,4 @@ by the biologist without having to rely on a bioinformatician.
 
 Please view image below:
 
-![LCDB Website]( https://github.com/MediciPrime/Repository-Images/blob/master/lcdb_website.png )
+![LCDB Website]( https://github.com/MediciPrime/Repository-Images/blob/master/lcdb.png )
