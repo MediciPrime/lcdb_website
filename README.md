@@ -12,4 +12,4 @@ binary heatmap.  In this way a lot of the regulatory information can be obtained
 by the biologist without having to rely on a bioinformatician.  Please view image
 below:
 
-![LCDB Website]( Repository-Images/lcdb_website.png )
+![LCDB Website]( https://github.com/MediciPrime/Repository-Images/blob/master/lcdb_website.png )
