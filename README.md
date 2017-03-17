@@ -14,3 +14,6 @@ by the biologist without having to rely on a bioinformatician.
 Please view image below:
 
 ![LCDB Website]( https://github.com/MediciPrime/Repository-Images/blob/master/lcdb.png )
+
+## Acknowledgment
+The idea of creating such an interconnected app was thought of by [Ryan Dale](https://github.com/daler).
