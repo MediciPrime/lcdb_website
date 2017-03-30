@@ -97,11 +97,12 @@ class Heatmap(object):
         linkList = []
         source = 0
         target = 0
+        open('./istatFile.txt', 'a').close()
         # split list of permutations
         for ivalue in product(self.files, repeat=2):
             f_l1 = ivalue[0]
             f_l2 = ivalue[1]
-            d = '/Users/Medici/Desktop/LCDB_Data/Behram/dm6.bed'
+            d = 'dm6.bed'
             o = 'istatFile.txt'
             md5_1 = Bed.query.filter_by(file_location=f_l1).first().md5
             md5_2 = Bed.query.filter_by(file_location=f_l2).first().md5

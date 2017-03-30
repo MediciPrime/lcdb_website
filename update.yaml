@@ -10,4 +10,4 @@
   user: your_name
   organism: D. melanogaster
   technique: ChIP-seq
-  dirloc: sample_data/your_name/
+  dirloc: sample_data/Behram/
