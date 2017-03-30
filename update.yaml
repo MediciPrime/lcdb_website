@@ -4,10 +4,10 @@
   user: public
   organism: D. melanogaster
   technique: ChIP-seq
-  dirloc: /home/behram/Desktop/data/chip-seq/h3k4me3/
+  dirloc: /Users/Medici/Desktop/LCDB_Data/public/
 
 -
   user: Behram
   organism: D. melanogaster
   technique: ChIP-seq
-  dirloc: /home/behram/Desktop/beds/
+  dirloc: /Users/Medici/Desktop/LCDB_Data/Behram/

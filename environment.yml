@@ -1,0 +1,53 @@
+name: flask
+channels: !!python/tuple
+- !!python/unicode
+  'bioconda'
+- !!python/unicode
+  'r'
+- !!python/unicode
+  'defaults'
+dependencies:
+- bioconda::intervalstats=1.01=0
+- openssl=1.0.2j=0
+- pip=9.0.1=py35_1
+- python=3.5.2=0
+- readline=6.2=2
+- setuptools=27.2.0=py35_0
+- sqlite=3.13.0=0
+- tk=8.5.18=0
+- wheel=0.29.0=py35_0
+- xz=5.2.2=0
+- yaml=0.1.6=0
+- zlib=1.2.8=3
+- pip:
+  - alembic==0.8.9
+  - blinker==1.4
+  - click==6.6
+  - dominate==2.3.1
+  - flask==0.11.1
+  - flask-bootstrap==3.3.7.0
+  - flask-login==0.4.0
+  - flask-mail==0.9.1
+  - flask-migrate==2.0.2
+  - flask-moment==0.5.1
+  - flask-script==2.0.5
+  - flask-sqlalchemy==2.1
+  - flask-wtf==0.13.1
+  - itsdangerous==0.24
+  - jinja2==2.8
+  - mako==1.0.6
+  - markupsafe==0.23
+  - numpy==1.11.3
+  - pandas==0.19.1
+  - pybedtools==0.7.8
+  - pysam==0.9.1.4
+  - python-dateutil==2.6.0
+  - python-editor==1.0.3
+  - pytz==2016.10
+  - six==1.10.0
+  - sqlalchemy==1.1.4
+  - visitor==0.1.3
+  - werkzeug==0.11.11
+  - wtforms==2.1
+prefix: /Users/Medici/miniconda2/envs/flask
+

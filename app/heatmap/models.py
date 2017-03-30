@@ -101,7 +101,7 @@ class Heatmap(object):
         for ivalue in product(self.files, repeat=2):
             f_l1 = ivalue[0]
             f_l2 = ivalue[1]
-            d = '/home/behram/Desktop/beds/dm6.bed'
+            d = '/Users/Medici/Desktop/LCDB_Data/Behram/dm6.bed'
             o = 'istatFile.txt'
             md5_1 = Bed.query.filter_by(file_location=f_l1).first().md5
             md5_2 = Bed.query.filter_by(file_location=f_l2).first().md5
