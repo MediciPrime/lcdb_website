@@ -39,16 +39,18 @@ Note: If you want other computer to connect to the web server, determine your lo
       
 ### Intializing Database
 
-1. Start the webserver and register an account by clicking on *Log In* in the upper 
-   right-hand corner and then on *Click here to register*.
-2. In the *sample_data* folder make sure to change *your_name* to the name you entered
-   for *Username* in the account registration form.
-3. With a text editor of your choice, open *update.yaml* and change all occurrences of
-   *your_name* to the *username* you entered above. **Case Sensitive**
-4. Now initialize the database by running the following commands:
+1. Initialize the database by running the following commands:
    - `./manage.py db init`
    - `./manage.py db migrate -m "initial migration"`
    - `./manage.py db upgrade`
+2. Start the webserver and register an account by clicking on *Log In* in the upper 
+   right-hand corner and then on *Click here to register*.
+   - Make sure to confirm the account via the confirmation email
+3. In the *sample_data* folder make sure to change *your_name* to the name you entered
+   for *Username* in the account registration form.
+4. With a text editor of your choice, open *update.yaml* and change all occurrences of
+   *your_name* to the *username* you entered above. **Case Sensitive**
+5. Now add the sample data to the database by running the following command:
    - `./update.py`
    
 Your database should now be ready. You should now be able to start the web server with
