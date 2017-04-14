@@ -24,7 +24,7 @@ The commands below will initialize the webserver but it will not contain a datab
 *Intializing Database* will help you initialize a database and add any necessary data
 values.
 
-1. `git clone` the *4C-Workflow* directory into your local directory
+1. `git clone` the *lcdb_website* directory into your local directory
 2. Install [Miniconda](http://conda.pydata.org/miniconda.html)
 3. Create the conda environment with the following command:
    - `conda env create -f environment.yml`
